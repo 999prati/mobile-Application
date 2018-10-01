@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
+    <link rel="stylesheet" href="style.css/mobileApp.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="shortcut icon" sizes="128x128" href="style.css/nysl_logo.png">
+    <title> Title </title>
+
+</head>
+
+<body>
+
+    <div id="main">
+
+        <nav>
+            <a v-on:click='tablePage()' class="button" id="bt1"><img src="style.css/icons8-planner-40.png"></a>
+
+            <a v-on:click='locationPage()' class="button" id="bt2"><img src="style.css/icons8-location-40.png"></a>
+
+            <a v-on:click='teamPage()' class="button" id="bt3"><img src="style.css/icons8-teams-40.png">Teams</a>
+        </nav>
+
+
+        <div  class="container" id="bigContainer">
+<!--
+            <div class="container">
+                <div class="wrap">
+                    <div v-show="logo" class="cube">
+                        <img id="logo" src="style.css/nysl_logo.png" id="logo" class="img-responsive center-block">
+                    </div>
+                </div>
+            </div>
+-->
+
+            <div v-show="table">
+
+                <a v-for="game in allGames">
+                    <div id="table">
+                        <h1 id="t1"> {{game.date}}</h1>
+                        <h1 id="t2">Team {{game.Team}}</h1>
+                        <h1 id="t3">Time {{game.Time}}</h1>
+                    </div>
+                </a>
+
+            </div>
+
+            <div v-show="teams" id="myTeams">
+                <h1>Teams</h1>
+                <div v-for="game in allGames1">
+               
+                <h2 class="button" @click='gamesForOneTeam(game.team)'>{{game.team}}</h2>
+                </div>
+            </div>
+
+            <div v-show="filterTeam" id="tableMiddle">
+                <table class="table table-dark">
+                   
+                    <thead>
+<!--
+                          <div v-for="game in allGames1">
+                           <h1>{{game.team}}</h1>  </div>
+-->
+                           <tr>
+                            <th>Date/month</th>
+                            <th>Team</th>
+                            <th>Time</th>
+                        </tr>
+                       
+                    </thead>
+
+                    <tbody>
+                        <tr v-for="game in filteredGames">
+                            <div id="table">
+                                <td id="t1">{{game.date}}</td>
+                                <td id="t2">{{game.Team}}</td>
+                                <td id="t3">{{game.Time}}</td>
+                            </div>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div v-show="location">
+                 <h1>Locations</h1>
+                <div class="w3-bar-item w3-button" v-for="game in allGames" id="border">
+                  
+                    <h3>{{game.Team}}</h3>
+                    <p>{{game.school}}</p>
+                    <a :href="game.url"><img id="imgLocation" src="style.css/download.1.png"></a>
+                </div>
+            </div>
+
+            <div v-show="calender">
+                <div v-for="game in games">
+                    <h2>{{game.month}}</h2>
+                    <p>{{game.thing}}</p>
+                </div>
+            </div>
+
+            <div v-show="logIn">
+                <div class="chat">
+                    <div class="advice">
+                        <h1>You must to be logged</h1>
+                        <button id="login" v-on:click='loggedInPage()' class="button is-info">Login!</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div v-show="chatPage" class="container">
+                <button id="logout-post" v-on:click='logOutPage()' class="button is-info">logOut</button>
+
+
+                <div id="posts" class="devide">
+
+                    <div v-for="post in posts" :class='post.user'>
+                        <template>
+                        <img id="imageUser" :src="post.img" />
+                        <h6>{{post.name}}</h6>
+                        <p>{{post.body}}</p>
+                        </template>
+
+                    </div>
+                </div>
+
+
+
+                <div class="inputs">
+                    <input id="textInput" class="input" type="text" placeholder="Your message...">
+
+                    <button id="create-post" v-on:click='writeNewPost()' class="button">Send</button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="container">
+            <div class="footer">
+
+                <a v-on:click='homePage()' class="button" id="home">  <img src="style.css/icons8-home-page-40.png"></a>
+
+                <a v-on:click='loginPage()' class="button" id="msg"><img src="style.css/icons8-thinking-male-40.png"></a>
+
+
+                <a href="mailto:nysl@chisoccer.org" class="button" id="mail"><img src="style.css/icons8-gmail-login-16.png"></a>
+
+                <a v-on:click='calenderPage()' class="button" id="date"><img src="style.css/icons8-contact-info-40.png"></a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDzCkMt6LXe3WYlGB_1QioiJJdK3tr-RIE",
+            authDomain: "myapp-df98d.firebaseapp.com",
+            databaseURL: "https://myapp-df98d.firebaseio.com",
+            projectId: "myapp-df98d",
+            storageBucket: "myapp-df98d.appspot.com",
+            messagingSenderId: "112922684886"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="script.js/mobileApp.js"></script>
+</body>
+
+</html>
